@@ -1,0 +1,42 @@
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.yellow-btn {
+  background-color: yellow;
+  border: 1px solid black;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: #888;
+  font-weight: bold;
+}
+
+.expert-block {
+  margin-bottom: 5mm;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.criteria-block {
+  margin-bottom: 5mm;
+}
+
+.alternative-block {
+  margin-bottom: 5mm;
+}
+
+#submit-btn {
+  margin-top: 4mm;
+}

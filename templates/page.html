@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block content %}
+  <!-- Главное модальное окно -->
+  <div id="main-modal" class="modal" style="display: block;">
+    <h2>Принятие решений на основе лингвистической информации</h2>
+    <label for="experts-input">Введите количество экспертов:</label>
+    <input type="number" id="experts-input" name="experts-input" value="1" min="1" max="50" required>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="submit-btn" class="yellow-btn">Отправить</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно экспертов -->
+  <div id="experts-modal" class="modal">
+    <h2>Введите характеристики экспертов</h2>
+    <div id="experts-fields"></div>
+    <p id="warning-message1" style="color: red; display: none;"></p>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-experts-btn" class="yellow-btn">Следующее</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно для ввода количества критериев -->
+  <div id="criteria-count-modal" class="modal">
+    <h2>Введите количество критериев</h2>
+    <input type="number" id="criteria-count-input" name="criteria-count-input" value="1" min="1" max="50" required>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-criteria-count-btn" class="yellow-btn">Следующее</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно для ввода критериев -->
+  <div id="criteria-modal" class="modal">
+    <h2>Введите критерии</h2>
+    <div id="criteria-fields"></div>
+    <p id="warning-message" style="color: red; display: none;"></p>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-criteria-btn" class="yellow-btn">Следующее</button>
+    </div>
+  </div>
+
+<!--
+  Модальное окно для количества шкал качественных критериев
+  <div id="qualitative-count-modal" class="modal">
+    <h2>Введите количество шкал качественных критериев</h2>
+    <input type="number" id="qualitative-count-input" name="qualitative-count-input" value="1" min="1" max="50" required>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-qualitative-count-btn" class="yellow-btn">Следующее</button>
+    </div>
+  </div> -->
+
+<!--
+   Модальное окно для ввода шкалы оценивания качественных критериев
+  <div id="qualitative-scale-modal" class="modal">
+    <h2>Введите шкалу оценивания для качественных критериев</h2>
+    <h4>Необходимо хотя бы 3 пункта</h4>
+    <p>Пример шкалы: "очень низкий", "низкий", "средний", "высокий", "очень высокий"</p>
+    <div id="qualitative-scale-fields">
+      {% for i in range(1, 11) %}
+        <div>
+          <span>{{ i }}. </span><input type="text" id="qualitative-scale-input-{{ i }}" name="qualitative-scale-input-{{ i }}">
+        </div>
+      {% endfor %}
+    </div>
+    <p id="warning-message4" style="color: red; display: none;"></p>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-qualitative-scale-btn" class="yellow-btn">Следующее</button>
+    </div>
+  </div> -->
+
+<!-- Модальное окно для отображения качественных шкал из онтологии -->
+<div id="qualitative-scales-modal" class="modal">
+    <h2>Качественные шкалы из онтологии</h2>
+    <div id="scales-content"></div>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-scales-btn" class="yellow-btn">Следующее</button>
+    </div>
+</div>
+
+<!-- Модальное окно для отображения ограничений для количественных критериев из онтологии -->
+<div id="quantitative-limits-modal" class="modal">
+    <h2>Ограничения для количественных критериев из онтологии</h2>
+    <div id="quantitative-limits-content"></div>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-limits-btn" class="yellow-btn">Следующее</button>
+    </div>
+</div>
+
+
+
+
+ <!-- Модальное окно для ввода количества альтернатив -->
+  <div id="alternatives-count-modal" class="modal">
+    <h2>Введите количество альтернатив</h2>
+    <input type="number" id="alternatives-count-input" name="alternatives-count-input" value="1" min="1" max="50" required>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-alternatives-count-btn" class="yellow-btn">Следующее</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно для ввода альтернатив -->
+  <div id="alternatives-modal" class="modal">
+    <h2>Введите альтернативы</h2>
+    <div id="alternatives-fields"></div>
+    <p id="warning-message2" style="color: red; display: none;"></p>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="next-alternatives-btn" class="yellow-btn">Следующее</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно для ввода оценки -->
+  <div id="assessment-modal" class="modal">
+    <h2>Введите оценку альтернатив</h2>
+    <div id="assessment-fields"></div>
+    <div id="warning-message3" class="warning-message"></div>
+    <div style="text-align: center; margin-bottom: 1em;">
+      <button id="save-data-btn" type="button" class="yellow-btn">Отправить</button>
+    </div>
+  </div>
+
+<!-- Результат -->
+<div id="result-modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none; text-align: center;">
+                <h2 class="text-center" style="width: 100%; margin-top: 10px;">Результат</h2>
+            </div>
+            <div class="modal-body">
+                <p id="result-text"></p>
+            </div>
+            <div class="modal-footer" style="border: none; text-align: center;">
+                <button id="restart-btn" class="yellow-btn">Начать сначала</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+<!-- костыль
+<div id="main-modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none; text-align: center;">
+                <h2 class="text-center" style="width: 100%; margin-top: 10px;">Результат</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p>alt01: Традиционный кинотеатр</p>
+                <p>alt03: Развлекательный центр</p>
+                <p>alt02: Бутиковый кинотеатр</p>
+            </div>
+            <div class="modal-footer" style="border: none; text-align: center;">
+                <button id="submit-btn" class="yellow-btn">Начать сначала</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
